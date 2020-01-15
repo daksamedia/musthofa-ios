@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#2196f3">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <title>Musthofa Lapor Rakyat</title>
+  <link rel="stylesheet" href="css/framework7.bundle.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="apple-touch-icon" href="img/f7-icon-square.png">
+  <link rel="icon" href="img/f7-icon.png">
+  <script src="cordova.js"></script>
+  <script src="js/openfb.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-storage.js"></script>
+  <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAOX6yNHPzWHWd30GnDagwlhgGv9iP8kLs",
+        authDomain: "musthofa-lapor.firebaseapp.com",
+        databaseURL: "https://musthofa-lapor.firebaseio.com",
+        projectId: "musthofa-lapor",
+        storageBucket: "musthofa-lapor.appspot.com",
+        messagingSenderId: "653288691711",
+        appId: "1:653288691711:web:e49daf72720bf99dc5f9ca",
+        measurementId: "G-0KW7CGZHL3"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      
+      // vars
+      var db = firebase.database();
+      var user = firebase.auth();
+      var storage = firebase.storage().ref();
+
+      //OPENFB
+  </script>
+</head>
+<body class="color-theme-red">
+  <div id="app">
+    <div class="panel panel-left panel-cover panel-resizable panel-init">
+      <div class="page">
+        <div class="page-content" style="background:#9a0f22; color:white;">
+          <div class="block">
+            <div class="row login-mode">
+              <div class="col-25">
+                <div class="demo-facebook-avatar">
+                    <img class="my_img" src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg" width="56" height="56"/>
+                </div>
+              </div>
+              <div class="col-75">
+                <h3 style="margin-left: 10px;" class="my_name">...</h3>
+              </div>
+            </div>
+            <div class="row guest-mode">
+                <div class="col-100">
+                  <div >
+                      <img src="img/LOGO.png" width="80%" />
+                  </div>
+                </div>
+                
+              </div>
+          </div>
+          <div class="list links-list">
+            <ul class="menu-list login-mode">
+              <li>
+                <a href="/edit-profile/" class="panel-close">Edit Profile</a>
+              </li>
+              <li>
+                <a href="/tulis-aspirasi/" class="panel-close">Buat Aspirasi</a>
+              </li>
+              <li>
+                <a href="/semua-aspirasi/" class="panel-close">Baca Aspirasi</a>
+              </li>
+              <li>
+                <a href="/berita/" class="panel-close">Berita</a>
+              </li>
+              <li>
+                <a href="/notifikasi/" class="panel-close">Notifikasi</a>
+              </li>
+              <li>
+                <a href="/about/" class="panel-close">Tentang Aplikasi</a>
+              </li>
+              <li>
+                <a href="https://play.google.com/store/apps/details?id=com.musthofalapor.app" class="external panel-close">Rate Us</a>
+              </li>
+              <li>
+                  <a href="#" class="panel-close logout">Logout</a>
+              </li>
+            </ul>
+            <ul class="menu-list guest-mode">
+                <li>
+                  <a href="/login-screen-page/" class="panel-close">Login atau Daftar</a>
+                </li>
+                <li>
+                  <a href="/semua-aspirasi/" class="panel-close">Baca Aspirasi</a>
+                </li>
+                <li>
+                  <a href="/berita/" class="panel-close">Berita</a>
+                </li>
+                <li>
+                  <a href="/about/" class="panel-close">Tentang Aplikasi</a>
+                </li>
+                <!-- <li>
+                  <a href="https://apps.apple.com/us/app/musthofa-lapor-rakyat/id1494574587" class="external panel-close">Rate Us</a>
+                </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="800" data-url="/">
+      <div class="page page-home">
+       
+        <div class="page-content" style=" background: #da0724;">
+          <div class="block" style="margin:0; padding:0;">
+            <div class="row">
+              <a href="#" style="position: absolute; z-index: 100; color: white; padding: 11px;font-size: 20px;" class="link icon-only panel-open" data-panel="left">
+                <i class="icon f7-icons if-not-md">menu</i>
+                <i class="icon material-icons md-only" style="font-size: 30px;">menu</i>
+              </a>
+              <div class="row" style="text-align: center;padding:40px 0; width:100%">
+                <img src="img/LOGO.png" style="margin:0 auto;" width="50%" />
+              </div>
+              <div class="swiper-container demo-swiper news-slider" >
+                  <div class="swiper-wrapper">
+                      
+                  </div>
+                  <div class="swiper-pagination news-pagination"></div>
+              </div>
+              <div class="row" style="text-align: center; padding:40px 10px; width:100%; height: 23vh;">
+                  <div class="col">
+                      <a href="/semua-aspirasi/">
+                        <button class="col button button-large  button-fill button-round color-white text-color-black">Lihat Aspirasi</button>
+                      </a>
+                  </div>
+                  <div class="col login-mode">
+                      <a href="/tulis-aspirasi/">
+                        <button class="col button button-large button-fill button-round color-white text-color-black">Tulis Aspirasi</button>
+                      </a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/framework7.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

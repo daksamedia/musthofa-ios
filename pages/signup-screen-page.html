@@ -1,0 +1,257 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback login-screen-page">
+    <div class="navbar navbar-large-transparent">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i style="color:white;" class="icon icon-back"></i>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+    <div class="page-content login-screen-content" style=" background: #da0724; color:white; height: 100vh; padding: 0 6%;">
+      <div class="login-screen-title"><img src="../img/LOGO.png" style="margin:0 auto;" width="50%" /></div>
+      <form>
+        <div class="list">
+          <ul class="login-form">
+            <li class="item-content item-input item-input-with-value" style="padding-left: 0 !important;">
+              <div class="item-inner" style="padding-right: 0 !important;">
+                <div class="item-title item-label">Nama Lengkap</div>
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Nama lengkap anda" id="fullname" class="input-with-value">
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input item-input-with-value" style="padding-left: 0 !important;">
+              <div class="item-inner" style="padding-right: 0 !important;">
+                <div class="item-title item-label">Email</div>
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Email anda" id="email" class="input-with-value">
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>            
+            <li class="item-content item-input" style="padding-left: 0 !important;">
+              <div class="item-inner" style="padding-right: 0 !important;">
+                <div class="item-title item-label">Password</div>
+                <div class="item-input-wrap" style="position: relative;">
+                  <input type="password" placeholder="Password anda" id="password" class="">
+                  <span class="f7-icons" @click="showPassword" style="position: absolute; top:0; right: 0;">eye</span>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input" style="padding-left: 0 !important;">
+              <div class="item-inner" style="padding-right: 0 !important;">
+                <div class="item-title item-label">Ketik Ulang Password</div>
+                <div class="item-input-wrap" style="position: relative;">
+                  <input type="password" placeholder="Ketik Ulang Password anda" id="repass" class="">
+                  <span class="f7-icons" @click="showPassword" style="position: absolute; top:0; right: 0;">eye</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="list">
+          <div class="row" style="text-align: center;  width:100%; ">
+            <div class="col">
+                <a href="#" @click="register">
+                  <div class="col button button-large  button-fill button-round color-white text-color-black preloader_div" style="display: none;"><div class="preloader color-red"></div></div>
+                  <button class="col button button-large  button-fill button-round color-white text-color-black reg_btn">Daftar</button>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/login-screen-page/">
+                  <button class="col button button-large button-outline button-round color-white text-color-white">Masuk</button>
+                </a>
+            </div>
+          </div>
+          <div class="row" style="justify-content: center; width: 100%;">
+            <p>atau</p>
+          </div>
+          <div class="row" style="text-align: center;  width:100%; ">
+              <div class="col">
+                  <a href="#">
+                    <button @click="signInFB" style="background: navy; color:white !important;" class="col button button-large  button-fill button-round text-color-black">Daftar lewat Facebook</button>
+                  </a>
+              </div>
+          </div>
+          <div class="block-footer" style="color:white; margin-top:30px !important; font-size: 12px;"><strong>Musthofa Lapor Rakyat</strong> adalah aplikasi layanan penyampaian laporan, saran, informasi, maupun kritik bagi seluruh masyarakat Indonesia</div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  var hide_pass=true;
+  
+  return {
+    methods: {
+      showPassword:function(e){
+        var ini = e.target;
+        if(hide_pass){
+          hide_pass=false;
+          $$(ini).html("eye_slash")
+          $$(ini).siblings("input").attr("type","text");
+        }else{
+          hide_pass=true;
+          $$(ini).html("eye")
+          $$(ini).siblings("input").attr("type","password");
+        }
+        
+      },
+      register: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        var fullname = $('#fullname').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var repass = $("#repass").val();
+        var id = Math.floor(100+Math.random()*9000);
+        $(".preloader_div").show();
+        $(".reg_btn").hide();
+
+        if(password==repass){
+          function register(id, fullname, email, password){
+              var ref= db.ref('users/'+id);
+              var newUser= {
+                "id":id,
+                "push_id":"0",
+                "fullname": fullname,
+                "email": email,
+                "method":"inapp",
+                "avatar": 'https://www.iavm.org/sites/default/files/iavm/staff/blank_avatar.jpg',
+                "date_created":Date.now(),
+              }
+
+              user.createUserWithEmailAndPassword(email, password).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                app.dialog.alert(errorMessage)
+              }).then(function(){
+                ref.set(newUser, function(err){
+                  if(err){
+                    app.dialog.alert("Terjadi kesalahan, mohon ulangi daftar.")
+                  }else{
+                    var toastBottom = app.toast.create({
+                      text: 'Akun berhasil dibuat.',
+                      closeTimeout: 2000,
+                    });
+
+                    $(".preloader_div").hide();
+                    $(".reg_btn").remove();
+                    toastBottom.open();
+                    app.views.main.router.back();
+                  }
+                });
+                
+              });
+            }
+          
+          register(id, fullname, email, password);
+        }else{
+          $(".preloader_div").hide();
+          $(".reg_btn").show();
+          app.dialog.alert("Password belum sesuai.")
+        }
+      },
+      signInFB:function(){
+        var fbtoken=0;
+        function fbLoginSuccess() {
+
+          openFB.api({
+            path: '/v2.8/me',
+            params: { "access_token": fbtoken, "fields":"id,name,email" },
+            success: function(userData) {
+              console.log(JSON.stringify(userData));
+              db.ref("users").orderByChild("email").equalTo(userData.email).once("value",function(snapshot){
+                  app.dialog.preloader('Mohon tunggu...');
+                  if (snapshot.exists()){
+                    localStorage.setItem("login_status", "true");
+                    localStorage.setItem("login_email", userData.email);
+                    snapshot.forEach(function(childSnapshot) {
+                      var data_user = childSnapshot.val();
+                      localStorage.setItem("login_fullname", data_user.fullname);
+                      localStorage.setItem("login_avatar", data_user.avatar);
+                      localStorage.setItem("login_id", data_user.id);
+                      localStorage.setItem("login_type","vendor");
+                      var toastBottom = app.toast.create({
+                        text: 'Berhasil masuk akun.',
+                        closeTimeout: 2000,
+                      });
+                      app.dialog.close();
+                      toastBottom.open();
+                      setTimeout(function(){
+                        db.ref("users").child(data_user.id).update({
+                          'push_id':onesignal_id
+                        })
+                        window.location.reload();  
+                      }, 2000)
+                      
+                    });
+                    
+                  }else{
+                    var id = Math.floor(100+Math.random()*9000);
+                    var ref= db.ref('users/'+id);
+                    var newUser= {
+                      "id":id,
+                      "push_id":onesignal_id,
+                      "fullname": userData.name,
+                      "email": userData.email,
+                      "method":"facebook",
+                      "avatar": userData.picture.data.url,
+                      "date_created":Date.now(),
+                    }
+                    
+                    
+                    ref.set(newUser, function(err){
+                      app.dialog.close();
+                      if(err){
+                        app.dialog.alert("Terjadi kesalahan, mohon ulangi daftar.")
+                      }else{
+                        app.preloader.close();
+                        localStorage.setItem("login_status", "true");
+                        localStorage.setItem("login_email", userData.email);
+                        localStorage.setItem("login_fullname", userData.name);
+                        localStorage.setItem("login_avatar", userData.picture.data.url);
+                        localStorage.setItem("login_id", id);
+                        var toastBottom = app.toast.create({
+                          text: 'Akun berhasil dibuat dan berhasil masuk',
+                          closeTimeout: 2000,
+                        });
+
+                        toastBottom.open();
+                        app.views.main.router.back();
+                      }
+                    });
+
+                  }
+              });
+              
+            },
+            error: function(error){
+              app.dialog.alert("Terjadi kesalahan: "+error)
+            }
+          });
+        }
+
+        openFB.login(
+          function(response){
+            if(response.status === 'connected') {
+              fbtoken=response.authResponse.accessToken;
+              //app.dialog.alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);
+              fbLoginSuccess();
+            } else {
+              app.dialog.alert('Masuk lewat Facebook gagal karena: ' + response.error);
+            }
+          }, {scope: 'public_profile,email'}
+        )
+      }
+    }
+  }
+</script>
