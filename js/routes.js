@@ -69,98 +69,100 @@ var routes = [
           if(snapshot.exists()){
             var lazy_img = app.lazy.create("img.lazy");
             var asp_length = snapshot.numChildren()
-            var aspirasi = snapshot.val();
-            var aps_id = aspirasi.id;
-            var asp_date = new Date(aspirasi.date_created).getDate();
-            var asp_month = new Date(aspirasi.date_created).getMonth();
-            var asp_year = new Date(aspirasi.date_created).getFullYear();
-            var asp_hour = new Date(aspirasi.date_created).getHours();
-            if(asp_hour<10){
-              asp_hour="0"+asp_hour;
-            }
-            var asp_minute = new Date(aspirasi.date_created).getMinutes();
-            if(asp_minute<10){
-              asp_minute="0"+asp_minute;
-            }
             
-            var asp_all_date = asp_date +' '+month_arr[asp_month]+' '+asp_year+", "+ asp_hour +":"+ asp_minute;
-            var asp_author_id = aspirasi.author.id;
-
-         
-            if(asp_length>0){
-              asp_loaded = true;
-              $$(".skeleton-text").remove();
-              $$(".empty_state").remove();
-              $$(".aspirasi_list").css("background","#fafafa").css("text-align","left");
-              var asp_status = aspirasi.response.status;
-  
+            snapshot.forEach(function(snap) {
+              var aspirasi = snap.val();
+              var aps_id = aspirasi.id;
+              var asp_date = new Date(aspirasi.date_created).getDate();
+              var asp_month = new Date(aspirasi.date_created).getMonth();
+              var asp_year = new Date(aspirasi.date_created).getFullYear();
+              var asp_hour = new Date(aspirasi.date_created).getHours();
+              if(asp_hour<10){
+                asp_hour="0"+asp_hour;
+              }
+              var asp_minute = new Date(aspirasi.date_created).getMinutes();
+              if(asp_minute<10){
+                asp_minute="0"+asp_minute;
+              }
               
-              if(asp_status=="true"){
-                $$(".aspirasi_list").prepend(`<div class="aspirasi-card card demo-facebook-card" data-author="`+ asp_author_id +`" data-created="`+ aspirasi.date_created +`">
-                    <div class="card-header with-date">
-                        <div class="demo-facebook-avatar"><img src="" width="34" height="34"/></div>
-                        <div class="demo-facebook-name"></div>
-                        <div class="demo-facebook-date">`+ asp_all_date +`</div>
-                    </div>
-                    <div class="card-content card-content-padding">
-                        <p>`+ aspirasi.title +`</p><img src="`+ aspirasi.image +`" width="100%" style="min-height:120px;" class="lazy lazy-fade-in demo-lazy" />
-                        <p class="likes">Komentar : `+ snapshot.child("comments").numChildren() +` orang &nbsp;<span style="float:right; color:#66ae67; font-weight:bold;">Sudah ditanggapi</span></p>
-                    </div>
-                    <div class="card-footer"><a href="#" class="link" style="color:#da0724">`+ aspirasi.category +`</a><a class="go_comment" data-title="`+ aspirasi.title +`" href="/komentar/`+ aps_id +`/" >Tanggapan</a><div class="link share" data-body="`+ aspirasi.title +`" data-title="Baca Aspirasi ini Sekarang" data-link="`+ aspirasi_site +`?id=`+ aps_id +`" data-author="" data-image="`+ aspirasi.image +`" >Share</div></div>
-                </div>`);
+              var asp_all_date = asp_date +' '+month_arr[asp_month]+' '+asp_year+", "+ asp_hour +":"+ asp_minute;
+              var asp_author_id = aspirasi.author.id;
+
+          
+              if(asp_length>0){
+                asp_loaded = true;
+                $$(".skeleton-text").remove();
+                $$(".empty_state").remove();
+                $$(".aspirasi_list").css("background","#fafafa").css("text-align","left");
+                var asp_status = aspirasi.response.status;
+    
+                
+                if(asp_status=="true"){
+                  $$(".aspirasi_list").prepend(`<div class="aspirasi-card card demo-facebook-card" data-author="`+ asp_author_id +`" data-created="`+ aspirasi.date_created +`">
+                      <div class="card-header with-date">
+                          <div class="demo-facebook-avatar"><img src="" width="34" height="34"/></div>
+                          <div class="demo-facebook-name"></div>
+                          <div class="demo-facebook-date">`+ asp_all_date +`</div>
+                      </div>
+                      <div class="card-content card-content-padding">
+                          <p>`+ aspirasi.title +`</p><img src="`+ aspirasi.image +`" width="100%" style="min-height:120px;" class="lazy lazy-fade-in demo-lazy" />
+                          <p class="likes">Komentar : `+ snapshot.child("comments").numChildren() +` orang &nbsp;<span style="float:right; color:#66ae67; font-weight:bold;">Sudah ditanggapi</span></p>
+                      </div>
+                      <div class="card-footer"><a href="#" class="link" style="color:#da0724">`+ aspirasi.category +`</a><a class="go_comment" data-title="`+ aspirasi.title +`" href="/komentar/`+ aps_id +`/" >Tanggapan</a><div class="link share" data-body="`+ aspirasi.title +`" data-title="Baca Aspirasi ini Sekarang" data-link="`+ aspirasi_site +`?id=`+ aps_id +`" data-author="" data-image="`+ aspirasi.image +`" >Share</div></div>
+                  </div>`);
+                  
+                  
+                }else{
+                  $$(".aspirasi_list").prepend(`<div class="aspirasi-card card demo-facebook-card" data-author="`+ asp_author_id +`" data-created="`+ aspirasi.date_created +`">
+                      <div class="card-header with-date">
+                          <div class="demo-facebook-avatar"><img src="" width="34" height="34"/></div>
+                          <div class="demo-facebook-name"></div>
+                          <div class="demo-facebook-date">`+ asp_all_date +`</div>
+                      </div>
+                      <div class="card-content card-content-padding">
+                          <p>`+ aspirasi.title +`</p><img src="`+ aspirasi.image +`" width="100%" style="min-height:120px;" class="lazy lazy-fade-in demo-lazy" />
+                          <p class="likes">Komentar : `+ snapshot.child("comments").numChildren() +` orang &nbsp;</p>
+                      </div>
+                      <div class="card-footer"><a href="#" class="link" style="color:#da0724">`+ aspirasi.category +`</a><a class="go_comment" data-title="`+ aspirasi.title +`" href="/komentar/`+ aps_id +`/" >Tanggapan</a><div class="link share" data-body="`+ aspirasi.title +`" data-title="Baca Aspirasi ini Sekarang" data-link="`+ aspirasi_site +`?id=`+ aps_id +`" data-author="" data-image="`+ aspirasi.image +`" >Share</div></div>
+                  </div>`);
+    
+                  
+                }
+    
+                usrx.child(asp_author_id).on("value",function(snap){
+                  var author_name = snap.val().fullname;
+                  var author_avatar = snap.val().avatar;
+                  var author_id = snap.val().id;
+                  if(author_avatar==undefined || author_avatar=="#" || author_avatar=="0" ){
+                    author_avatar= "https://www.iavm.org/sites/default/files/iavm/staff/blank_avatar.jpg"
+                  }
+    
+                  $$(".aspirasi-card[data-author='"+ author_id +"']").find(".demo-facebook-name").html(author_name);
+                  $$(".aspirasi-card[data-author='"+ author_id +"']").find(".demo-facebook-avatar").find("img").attr("src",author_avatar);
+                  $$(".aspirasi-card[data-author='"+ author_id +"']").find(".share").data("author", author_name);
+                });
+                
+    
                 
                 
               }else{
-                $$(".aspirasi_list").prepend(`<div class="aspirasi-card card demo-facebook-card" data-author="`+ asp_author_id +`" data-created="`+ aspirasi.date_created +`">
-                    <div class="card-header with-date">
-                        <div class="demo-facebook-avatar"><img src="" width="34" height="34"/></div>
-                        <div class="demo-facebook-name"></div>
-                        <div class="demo-facebook-date">`+ asp_all_date +`</div>
-                    </div>
-                    <div class="card-content card-content-padding">
-                        <p>`+ aspirasi.title +`</p><img src="`+ aspirasi.image +`" width="100%" style="min-height:120px;" class="lazy lazy-fade-in demo-lazy" />
-                        <p class="likes">Komentar : `+ snapshot.child("comments").numChildren() +` orang &nbsp;</p>
-                    </div>
-                    <div class="card-footer"><a href="#" class="link" style="color:#da0724">`+ aspirasi.category +`</a><a class="go_comment" data-title="`+ aspirasi.title +`" href="/komentar/`+ aps_id +`/" >Tanggapan</a><div class="link share" data-body="`+ aspirasi.title +`" data-title="Baca Aspirasi ini Sekarang" data-link="`+ aspirasi_site +`?id=`+ aps_id +`" data-author="" data-image="`+ aspirasi.image +`" >Share</div></div>
-                </div>`);
-  
-                
+                $$(".aspirasi_list").html(`<div class="row empty_state" style="justify-content:center">
+                <img src="`+ empty_graph +`" width="100%" style="opacity:.6" />
+                <p>`+ empty_msg +`</p></div>`);
+                $$(".aspirasi_list").css("background","white").css("text-align","center");
               }
-  
-              usrx.child(asp_author_id).on("value",function(snap){
-                var author_name = snap.val().fullname;
-                var author_avatar = snap.val().avatar;
-                var author_id = snap.val().id;
-                if(author_avatar==undefined || author_avatar=="#" || author_avatar=="0" ){
-                  author_avatar= "https://www.iavm.org/sites/default/files/iavm/staff/blank_avatar.jpg"
-                }
-  
-                $$(".aspirasi-card[data-author='"+ author_id +"']").find(".demo-facebook-name").html(author_name);
-                $$(".aspirasi-card[data-author='"+ author_id +"']").find(".demo-facebook-avatar").find("img").attr("src",author_avatar);
-                $$(".aspirasi-card[data-author='"+ author_id +"']").find(".share").data("author", author_name);
-              });
-              
-  
-              
-              
-            }else{
-              $$(".aspirasi_list").html(`<div class="row empty_state" style="justify-content:center">
-              <img src="`+ empty_graph +`" width="100%" style="opacity:.6" />
-              <p>`+ empty_msg +`</p></div>`);
-              $$(".aspirasi_list").css("background","white").css("text-align","center");
-            }
-          
-          
-            $$(".go_comment").click(function(){
-              var this_title = $$(this).data("title");
-              aspirasi_title = this_title;
-            })
             
-            $(".share").on('click',function(e){
-              console.log("tot");
-              e.preventDefault();
-              e.stopImmediatePropagation();
-              var author = $(this).data("author");
+            
+              $$(".go_comment").click(function(){
+                var this_title = $$(this).data("title");
+                aspirasi_title = this_title;
+              })
+              
+              $(".share").on('click',function(e){
+                console.log("tot");
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                var author = $(this).data("author");
               var title = "Baca Aspirasi Ini dari"+ author;
               var body = $(this).data("body");
               var image = $(this).data("image");
@@ -168,6 +170,8 @@ var routes = [
               window.plugins.socialsharing.share(body, title, image, link);
               
             });
+            });
+            
           }else{
             asp_loaded=true;
             $$(".skeleton-text").remove();
