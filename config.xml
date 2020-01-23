@@ -39,16 +39,16 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-	    <string>This app need camera access to take pictures for Profile Avatar & Post an Update</string>
+	    <string>This app need camera access to take pictures for Profile Avatar and Post an Update</string>
 	</edit-config>
 	<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-	    <string>This app need photo library access to get pictures from device for Profile Avatar & Post an Update</string>
+	    <string>This app need photo library access to get pictures from device for Profile Avatar and Post an Update</string>
 	</edit-config>
 	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
 	    <string>This app need location access to find things nearby</string>
 	</edit-config>
 	<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-	    <string>This app need photo library access to get pictures from device for Profile Avatar & Post an Update</string>
+	    <string>This app need photo library access to get pictures from device for Profile Avatar and Post an Update</string>
 	</edit-config>
         <!-- ICONS -->
         <!-- iOS 8.0+ -->
